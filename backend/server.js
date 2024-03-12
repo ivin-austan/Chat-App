@@ -1,12 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const colors = require("colors");
 const userRoutes = require("./Routes/userRoutes");
 const chatRoutes = require("./Routes/chatRoutes");
 const messageRoutes = require("./Routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 dotenv.config();
@@ -21,22 +21,40 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.get("/", (req, res) => {
-  res.send("Api is running");
-});
 
 app.use("/api/user", userRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/message", messageRoutes);
 
-app.use(notFound);
+
+// --------------------Deployment-------------------------------
+
+
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1,"/frontend/build")));   //direct to frontend
+
+  app.get("*", (req, res) => {                                        //getting all the files inside frontend's build
+    res.sendFile(path.resolve( __dirname1,"frontend", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Api is running");
+  });
+}
+
+
+// --------------------Deployment-------------------------------
+
+
+  app.use(notFound);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
 
 const server = app.listen(
   port,
-  console.log(`App is running in port ${port}`.yellow.bold)
+  console.log(`App is running in port ${port}`)
 );
 
 const io = require("socket.io")(server, {
