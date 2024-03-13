@@ -15,7 +15,7 @@ connectDB();
 app.use(express.json()); //to accept json data
 
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "https://iv-chat.onrender.com"],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
