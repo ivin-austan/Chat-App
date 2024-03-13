@@ -30,7 +30,7 @@ const defaultOptions ={
   }
 }
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://iv-chat.onrender.com";
 var socket, selectedChatCompare;
 
 const SingleChats = ({ fetchAgain, setFetchAgain }) => {
