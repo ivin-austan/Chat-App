@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/chatProvider";
+import { BsFillSendFill } from "react-icons/bs";
 import {
   Box,
   FormControl,
@@ -104,8 +105,8 @@ const SingleChats = ({ fetchAgain, setFetchAgain }) => {
     });
   });
 
-  const sendMessage = async (e) => {
-    if (e.key === "Enter" && newmessage) {
+  const sendMessage = async (e, accept) => {
+    if ((e.key === "Enter" || accept === 'send') && newmessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
@@ -223,17 +224,37 @@ const SingleChats = ({ fetchAgain, setFetchAgain }) => {
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-              {isTyping ? <div><Lottie options={defaultOptions}
-              width={70} 
-              style={{marginBottom:15, marginLeft:0}}
-              /> </div> : <></>}
+              {isTyping ? (
+                <div>
+                  <Lottie
+                    options={defaultOptions}
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
+                  />{" "}
+                </div>
+              ) : (
+                <></>
+              )}
               <Input
                 variant="filled"
                 bg="#E0E0E0"
                 placeholder="Enter a message"
                 onChange={typingHandler}
                 value={newmessage}
+                style={{ marginRight: "40px" }}
               />
+              <span
+                onClick={(e)=>sendMessage(e,'send')}
+                style={{
+                  position: "absolute",
+                  right: "15px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor:"pointer"
+                }}
+              >
+                <BsFillSendFill/>
+              </span>
             </FormControl>
           </Box>
         </>
