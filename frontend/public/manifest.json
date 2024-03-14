@@ -3,18 +3,18 @@
   "name": "Ivin Chat",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "ivin_chat.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
+      "src": "ivin_chat.jpg",
+      "type": "image/jpg",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
+      "src": "ivin_chat.jpg",
+      "type": "image/jpg",
       "sizes": "512x512"
     }
   ],
