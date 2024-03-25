@@ -19,7 +19,9 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
   const [password, setPassword] = useState("");
-  const [pic, setPic] = useState("");
+  const [pic, setPic] = useState(
+    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+  );
   const [show, setShow] = useState(false);
   const [showc, setShowc] = useState(false);
   const [loading,setLoading] = useState(false);
