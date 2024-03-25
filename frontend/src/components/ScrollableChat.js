@@ -15,12 +15,12 @@ const ScrollableChat = ({ messages }) => {
              {(isSameSender(messages, m, i, user._id) ||
                isLastMessage(messages, i, user._id)) && (
                <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
-                 <Avatar
+                 <Avatar                                          //give the pic for the avatar
                    mt="7px"
                    mr={1}
                    size="sm"
                    cursor="pointer"
-                   name={m.sender.name}
+                   name={m.sender.name}                           //take the first letter from the name to display in avatar defaultly
                    src={m.sender.pic}
                  />
                </Tooltip>
