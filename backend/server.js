@@ -14,11 +14,20 @@ connectDB();
 
 app.use(express.json()); //to accept json data
 
+const allowedOrigins =  ["http://localhost:3000", "https://iv-chat.onrender.com"];
+
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://iv-chat.onrender.com"],
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS')); // Block the request
+    }
+  },
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+  };
+
 app.use(cors(corsOptions));
 
 
@@ -36,6 +45,7 @@ if (process.env.NODE_ENV === "production") {
 
   app.get("*", (req, res) => {                                        //getting all the files inside frontend's build
     res.sendFile(path.resolve( __dirname1,"frontend", "build", "index.html"));
+    res.send("Api is running in production env.");
   });
 } else {
   app.get("/", (req, res) => {
@@ -60,8 +70,9 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://iv-chat.onrender.com",
+    origin:[ "https://iv-chat.onrender.com","http://localhost:3000"],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
